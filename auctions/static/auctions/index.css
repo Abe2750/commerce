@@ -1,0 +1,20 @@
+.clearfix {
+  border: 1px solid ;
+  padding: 20px;
+  border-radius: 25px;
+  margin :15px;
+  
+}
+
+.img {
+  float: left;
+}
+.text {
+    float: right;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

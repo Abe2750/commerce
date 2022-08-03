@@ -1,0 +1,63 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'auctions/index.css' %}">
+{% endblock %}
+{% block body %}
+    {% if not  watchList %}
+    <h2>Active Listings</h2>
+    {% else %}
+    <h2>WatchList</h2>
+    {% endif %}
+
+        {% for listing in listings %}
+
+        {% if listing.active %}
+            <a href="{% url 'listingPage'  listing.title %}" >
+                <div class="clearfix">
+                    <img class = "img"  alt = "{{ listing.title }}"src ="{{ listing.image }}" width="300" height="200">
+                    <div class = "text"> 
+                        <p> {{ listing.title }}</p>
+                        <p> {{ listing.description }}</p>
+                        <p> Price : {{ listing.startBid }}</p>
+                    </div>
+                
+            
+                </div>
+            </a>
+        {% else %}
+    
+        {% endif %}
+        {% empty %}
+            <div> No Active Listings.</div>
+        {% endfor %}
+   
+    {% if user.is_authenticated %} 
+        <h2>Items You won</h2>
+        {% for win in wins %}
+
+        
+            <a href="{% url 'listingPage2'  win.title%}" >
+                <div class="clearfix">
+                    <img class = "img"  alt = "{{ win.title }}"src ="{{ win.image }}" width="300" height="200">
+                    <div class = "text"> 
+                        <p> {{ win.title }}</p>
+                        <p> {{ win.description }}</p>
+                        <p> Price : {{ win.startBid }}</p>
+                        <p style="color:green"> You have won this item</p>
+                    </div>
+                
+            
+                </div>
+            </a>
+        
+        {% empty %}
+            <div> No Wins.</div>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+
+   
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'auctions/index.css' %}">
+{% endblock %}
+{% block body %}
+<ul>
+    <li > 
+        <a  href="{% url 'categories2' Toys %}">Toys</a>
+    </li>
+    <li> 
+        <a  href="{% url 'categories2' Electronics %}">Electronics</a>
+    </li>
+    <li> 
+        <a  href="{% url 'categories2' Fashion %}">Fashion</a>
+    </li>
+    <li> 
+        <a  href="{% url 'categories2' Home %}">Home</a>
+    </li>
+</ul>
+
+
+{% endblock %}

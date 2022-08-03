@@ -1,0 +1,87 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'auctions/index.css' %}">
+{% endblock %}
+
+{% block body %}
+
+<h3> {{ ListingUsed.title}}</h3>
+
+<div class="clearfix">
+    <img class = "img"  alt = "{{ ListingUsed.title }}" src ="{{ ListingUsed.image }}" width="600" height="400">
+    <div class = "text"> 
+        <p> {{ ListingUsed.description }}</p>
+        <p> Price : {{ ListingUsed.startBid }}</p>
+    </div>
+
+
+</div>
+<div>
+    <hr>
+    <h3>Comments</h3>
+    {% for comment in comments %}
+    <span> {{ comment.commenter }}:  {{comment.commentText}}</span>
+    {% empty %}
+     
+    {% endfor %}
+    <hr>
+</div>
+<div>
+    {% if user.is_authenticated %} 
+        {% if won%}
+            <h3 style = "color:green"> You have won this item</h3>
+        {% else %}
+            {% if creator %}        
+                <form   method="post">
+                {% csrf_token %}
+                <input type = "submit"  name = "Close Bid" value = "Close Bid" >
+            
+                </form>
+            {% else %}
+                <form   method="post">
+                    {% csrf_token %}
+                    {{ BidForm.as_p }}
+                    <input type = "submit"  name = "Place Bid" value = "Place Bid" >
+                    {% if message %}
+                    <p style = "color : red">Please Place a bid  greater than Starting bid and current highest </p>
+                    {% else %}
+                    
+                    {% endif %}
+                </form>
+                    <br>
+                <form   method="post">
+                    {% csrf_token %}
+                        
+                        
+                        {% if not add  %}
+
+                        <input type = "submit"  name = "Add to Watchlist" value = "Add  Watchlist" >
+
+                        {% else %}
+                        
+                        <input type = "submit"  name = "Remove from Watchlist" value = "Remove  Watchlist" >
+
+                        {% endif %}
+
+                </form>
+            
+            {% endif %}
+        {% endif %}
+        <form   method="post">
+            <br>
+            <br>
+            {% csrf_token %}
+             {{ CommentForm.as_p}}
+            <input type = "submit"  name = "Comment" value = "Comment" >
+        
+        </form>
+    {% else %}
+
+    {% endif %}
+</div>
+
+
+
+{% endblock %}
